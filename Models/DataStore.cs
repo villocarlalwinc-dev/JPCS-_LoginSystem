@@ -13,7 +13,7 @@ namespace JPCS.Models
             {
                 Id = 1,
                 Title = "Welcome!",
-                Content = "Welcome to the LSHCG Student Portal.",
+                Content = "Welcome to the  Home Page.",
                 DatePosted = new DateTime(2026, 8, 1)
             },
             new Announcement
