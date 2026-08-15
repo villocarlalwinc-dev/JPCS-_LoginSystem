@@ -1,0 +1,96 @@
+@model List<JPCS.Models.RentalDisplay>
+@{
+    var user = (JPCS.Models.User)ViewBag.User;
+}
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>My Account</h2>
+        <a asp-controller="Home" asp-action="Dashboard" class="btn btn-outline-secondary btn-sm">Back to Dashboard</a>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">@TempData["Success"]</div>
+    }
+
+    <div class="card p-3 mb-4">
+        <h5>Personal Details</h5>
+        <p><strong>Full Name:</strong> @user.FullName</p>
+        <p><strong>Student/Faculty ID:</strong> @user.StudentFacultyId</p>
+        <p><strong>Email:</strong> @user.Email</p>
+        <p><strong>Contact Number:</strong> @user.ContactNumber</p>
+    </div>
+
+    <div class="card p-3 mb-4">
+        <h5>Update Account Info</h5>
+        <form asp-controller="Account" asp-action="UpdateProfile" method="post">
+            <div class="mb-2">
+                <label>Email</label>
+                <input type="email" name="Email" class="form-control" value="@user.Email" />
+            </div>
+            <div class="mb-2">
+                <label>Password</label>
+                <input type="password" name="Password" class="form-control" placeholder="Leave blank to keep current password" />
+            </div>
+            <div class="mb-2">
+                <label>Contact Number</label>
+                <input type="text" name="ContactNumber" class="form-control" value="@user.ContactNumber" />
+            </div>
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+    </div>
+
+    <h5>Currently Rented Books (@Model.Count / 3)</h5>
+    @if (Model.Any(r => r.IsOverdue))
+    {
+        <div class="alert alert-warning">
+            You have @Model.Count(r => r.IsOverdue) book(s) overdue. Please return them.
+        </div>
+    }
+
+    @if (!Model.Any())
+    {
+        <p>You have no books currently rented.</p>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Rented On</th>
+                    <th>Due Date</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var r in Model)
+                {
+                    <tr>
+                        <td>@r.BookTitle</td>
+                        <td>@r.RentDate.ToString("MMM dd, yyyy")</td>
+                        <td>@r.DueDate.ToString("MMM dd, yyyy")</td>
+                        <td>
+                            @if (r.IsOverdue)
+                            {
+                                <span class="badge bg-danger">Overdue</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-success">On Time</span>
+                            }
+                        </td>
+                        <td>
+                            <form asp-controller="Book" asp-action="Return" method="post">
+                                <input type="hidden" name="rentalId" value="@r.RentalId" />
+                                <button type="submit" class="btn btn-sm btn-outline-secondary">Return</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
