@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("JPCS")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9999a6554dc68e914bf5065542a39797efdf718b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c824d01d82ba16d51660c5a71fd2342c76f86542")]
 [assembly: System.Reflection.AssemblyProductAttribute("JPCS")]
 [assembly: System.Reflection.AssemblyTitleAttribute("JPCS")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
